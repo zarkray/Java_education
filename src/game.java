@@ -12,6 +12,17 @@ public class game {
         step -= 10; // эквивалентно: step = step - 10
         step *= 5; // эквивалентно: step = step * 5
         step /= 2; // эквивалентно: step = step / 2
+        String person = "Г";
+        String monster = "Мм";
+        String gamingField = "+ —— + —— + —— +\n"
+        + "|    |    |    |\n"
+        + "+ —— + —— + —— +\n"
+        + "|    | " + monster + " |    |\n"
+        + "+ —— + —— + —— +\n"
+        + "| " + person + " |    |    |\n"
+        + "+ —— + —— + —— +";
+        System.out.println(gamingField);
+
 
     }
 }
