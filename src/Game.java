@@ -2,6 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
+
 public class Game {
     public static void main(String[] args) {
         System.out.println("Hello World!");
@@ -19,6 +20,7 @@ public class Game {
         Random random = new Random();
         int castleX = 1 + random.nextInt(sizeBoard);
 
+
         String gamingField = "+ —— + —— + —— +\n"
                 + "|    |    |    |\n"
                 + "+ —— + —— + —— +\n"
@@ -26,7 +28,9 @@ public class Game {
                 + "+ —— + —— + —— +\n"
                 + "| " + person + " |    |    |\n"
                 + "+ —— + —— + —— +";
-        System.out.println(gamingField);
+        String leftBlock = " | ";
+        String rightBlock = " |";
+        String wall = " + —— + —— + —— + —— + —— + ";
         String begin = "|    | |";
         String end = " |    |";
         String full = begin + monster + end; // |    | Мм |    |
@@ -49,6 +53,38 @@ public class Game {
                 System.out.println("Выбранная сложность:\t" + difficultGame);
 
                 while ((personLive > 0) && !(castleX == personX && castleY == personY)) {
+
+
+
+                    for (int y = 1; y <= sizeBoard; y++) {
+                        System.out.println(wall);
+                        for (int x = 1; x <= sizeBoard; x++) {
+                            System.out.print(leftBlock);
+                            if (personY == y && personX == x) {
+                                System.out.print(person);
+                            } else if (castleX == x && castleY == y) {
+                                System.out.print(castle);
+                            } else {
+                                System.out.print("  ");
+                            }
+                        }
+                        System.out.println(rightBlock);
+                    }
+                    System.out.println(wall);
+//                    String[] board = new String[sizeBoard * sizeBoard];
+                    String[][] board = new String[sizeBoard][sizeBoard];
+                    for (int y = 1; y <= sizeBoard; y++) {
+                        for (int x = 1; x <= sizeBoard; x++) {
+                            board[index] = " ";
+                        }
+                    }
+                    board[(castleY - 1) * sizeBoard + castleX - 1] = castle;
+                    board[(personY - 1) * sizeBoard + personX - 1] = person;
+
+
+
+
+                    System.out.println(wall);
                     System.out.println("Введите куда будет ходить персонаж(ход возможен только по вертикали и горизонтали на одну клетку;");
                     System.out.println("Координаты персонажа - (x: " + personX + ", y: " + personY + "))");
                     int x = scanner.nextInt();
@@ -56,22 +92,45 @@ public class Game {
                     if (x != personX && y != personY) {
                         System.out.println("Неккоректный ход");
                     } else if (Math.abs(x - personX) == 1 || Math.abs(y - personY) == 1) {
-                        personX = x;
-                        personY = y;
-                        step += 1;
-                        System.out.println("Ход корректный; Новые координаты: " +
-                                personX + ", " + personY + "\nХод номер: " + step);
+
+                        if (board[(personY - 1) * sizeBoard + personX - 1].equals("  ")) {
+                            board[(personY - 1) * sizeBoard + personX - 1] = "  ";
+                            personX = x;
+                            personY = y;
+                            step++;
+                            System.out.println("Ход корректный; Новые координаты: " + personX + ", " + personY + "\nХод номер: " + step);
+                        } else if (board[(personY - 1) * sizeBoard + personX - 1].equals(castle)) {
+                            System.out.println("Вы прошли игру");
+                            break;
+                        } else {
+                            System.out.println("Решите задачу.");
+                        }
+
+
                     } else {
                         System.out.println("Координаты не изменены");
                     }
                 }
+
+                System.out.println("Закончились жизни. Итог: ...");
+
                 break;
             case "НЕТ":
                 System.out.println("Жаль, приходи еще!");
                 break;
             default:
                 System.out.println("Данные введены некорректно");
+
+
         }
+
+
+
+
+
+
+
+
 
     }
 }
