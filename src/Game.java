@@ -2,7 +2,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-
 public class Game {
     public static void main(String[] args) {
         System.out.println("Hello World!");
@@ -52,8 +51,9 @@ public class Game {
                 int difficultGame = scanner.nextInt();
                 System.out.println("Выбранная сложность:\t" + difficultGame);
 
+//                    String[] board = new String[sizeBoard * sizeBoard];
+                String[][] board = new String[sizeBoard][sizeBoard];
                 while ((personLive > 0) && !(castleX == personX && castleY == personY)) {
-
 
 
                     for (int y = 1; y <= sizeBoard; y++) {
@@ -71,17 +71,17 @@ public class Game {
                         System.out.println(rightBlock);
                     }
                     System.out.println(wall);
-//                    String[] board = new String[sizeBoard * sizeBoard];
-                    String[][] board = new String[sizeBoard][sizeBoard];
                     for (int y = 1; y <= sizeBoard; y++) {
                         for (int x = 1; x <= sizeBoard; x++) {
-                            board[index] = " ";
+                            board[y - 1][x - 1] = " ";
                         }
                     }
-                    board[(castleY - 1) * sizeBoard + castleX - 1] = castle;
-                    board[(personY - 1) * sizeBoard + personX - 1] = person;
-
-
+                    int count_monster = sizeBoard * sizeBoard - sizeBoard - 1;
+                    for (int i = 0; i <= count_monster; i++) {
+                        board[random.nextInt(sizeBoard - 1)][random.nextInt(sizeBoard)] = monster;
+                    }
+                    board[(castleY - 1)][+castleX - 1] = castle;
+                    board[(personY - 1)][+personX - 1] = person;
 
 
                     System.out.println(wall);
@@ -93,20 +93,29 @@ public class Game {
                         System.out.println("Неккоректный ход");
                     } else if (Math.abs(x - personX) == 1 || Math.abs(y - personY) == 1) {
 
-                        if (board[(personY - 1) * sizeBoard + personX - 1].equals("  ")) {
-                            board[(personY - 1) * sizeBoard + personX - 1] = "  ";
+                        if (board[(personY - 1)][+personX - 1].equals("  ")) {
+                            board[(personY - 1)][+personX - 1] = "  ";
                             personX = x;
                             personY = y;
                             step++;
                             System.out.println("Ход корректный; Новые координаты: " + personX + ", " + personY + "\nХод номер: " + step);
-                        } else if (board[(personY - 1) * sizeBoard + personX - 1].equals(castle)) {
+                        } else if (board[(personY - 1)][+personX - 1].equals(castle)) {
                             System.out.println("Вы прошли игру");
                             break;
                         } else {
-                            System.out.println("Решите задачу.");
+                            Random r = new Random();
+                            int a = r.nextInt(100);
+                            int b = r.nextInt(100);
+                            int trueAnswer = x + y;
+                            System.out.println("Реши пример: " + a + " + " + b + " = ?");
+                            Scanner sc = new Scanner(System.in);
+                            int ans = sc.nextInt();
+                            if (trueAnswer == ans) {
+                                System.out.println("Верно! Ты победил монстра");
+                                System.out.println("Ты проиграл эту битву!");
+                                ;
+                            }
                         }
-
-
                     } else {
                         System.out.println("Координаты не изменены");
                     }
@@ -123,13 +132,6 @@ public class Game {
 
 
         }
-
-
-
-
-
-
-
 
 
     }
